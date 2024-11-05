@@ -21,7 +21,7 @@ type IngredientsState = {
   hasError: string | undefined | null;
 };
 
-const initialState: IngredientsState = {
+export const initialState: IngredientsState = {
   ingredients: [],
   isLoading: false,
   hasError: null

@@ -69,3 +69,5 @@ export const {
 
 export const { stateConstructorSelector, ingredientsConstructorSelector } =
   constructorSlice.selectors;
+const constructorReducer = constructorSlice.reducer;
+export default constructorReducer;

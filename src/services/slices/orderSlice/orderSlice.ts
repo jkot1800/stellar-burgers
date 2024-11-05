@@ -169,3 +169,6 @@ export const {
   totalSelector,
   totalTodaySelector
 } = orderSlice.selectors;
+
+const orderReducer = orderSlice.reducer;
+export default orderReducer;
