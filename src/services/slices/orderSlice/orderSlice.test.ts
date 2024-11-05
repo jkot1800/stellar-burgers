@@ -3,24 +3,13 @@ import orderReducer, {
   getOrders,
   getOrderByNum,
   postOrder,
-  clearOrderState
+  clearOrderState,
+  initialState
 } from './orderSlice';
 import { TOrder } from '@utils-types';
 import { TNewOrderResponse } from '../../../utils/burger-api';
 
 describe('Тест orderSlice', () => {
-  const initialState = {
-    order: null as TOrder | null,
-    name: null as string | null,
-    error: null as string | null | undefined,
-    isLoading: false,
-    orders: [] as TOrder[],
-    orderModal: [] as TOrder[],
-    profileOrders: [] as TOrder[],
-    total: null as number | null,
-    totalToday: null as number | null
-  };
-
   // Тест обработки начального состояния
   it('должен установить начальное состояние', () => {
     expect(orderReducer(undefined, { type: 'unknown' })).toEqual(initialState);

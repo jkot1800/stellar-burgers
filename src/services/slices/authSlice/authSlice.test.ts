@@ -2,7 +2,8 @@ import authReducer, {
   registerUser,
   loginUser,
   updateUser,
-  logoutUser
+  logoutUser,
+  initialState
 } from './authSlice';
 import { TUser } from '@utils-types';
 import {
@@ -12,12 +13,6 @@ import {
 } from '../../../utils/burger-api';
 
 describe('Тест authSlice', () => {
-  const initialState = {
-    user: null as TUser | null,
-    isAuthChecked: false,
-    error: null as string | null
-  };
-
   it('Тест начального состояния', () => {
     expect(authReducer(undefined, { type: 'unknown' })).toEqual(initialState);
   });

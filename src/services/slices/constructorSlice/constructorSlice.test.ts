@@ -3,17 +3,45 @@ import constructorReducer, {
   deleteIngredient,
   moveUpIngredient,
   moveDownIngredient,
-  resetConstructorState
+  resetConstructorState,
+  initialState
 } from './constructorSlice';
 import { TConstructorIngredient } from '../../../utils/types';
 import { describe, it, expect } from '@jest/globals';
 
-describe('Тесты ConstructorSlice reducer', () => {
-  const initialState = {
-    bun: null,
-    ingredients: []
-  };
+// Константа для тестового ингредиента 'Space Sauce'
+const spaceSauceIngredient: TConstructorIngredient = {
+  _id: '643d69a5c3f7b9001cfa0943',
+  name: 'Соус фирменный Space Sauce',
+  type: 'sauce',
+  proteins: 50,
+  fat: 22,
+  carbohydrates: 11,
+  calories: 14,
+  price: 80,
+  image: 'https://code.s3.yandex.net/react/code/sauce-04.png',
+  image_mobile: 'https://code.s3.yandex.net/react/code/sauce-04-mobile.png',
+  image_large: 'https://code.s3.yandex.net/react/code/sauce-04-large.png',
+  id: 'sauce-01'
+};
 
+// Константа для тестового ингредиента 'Spicy-X'
+const spicyXSauceIngredient: TConstructorIngredient = {
+  ...spaceSauceIngredient,
+  _id: '643d69a5c3f7b9001cfa0944',
+  name: 'Соус Spicy-X',
+  proteins: 30,
+  fat: 20,
+  carbohydrates: 40,
+  calories: 30,
+  price: 90,
+  image: 'https://code.s3.yandex.net/react/code/sauce-02.png',
+  image_mobile: 'https://code.s3.yandex.net/react/code/sauce-02-mobile.png',
+  image_large: 'https://code.s3.yandex.net/react/code/sauce-02-large.png',
+  id: 'sauce-02'
+};
+
+describe('Тесты ConstructorSlice reducer', () => {
   const bunIngredient: TConstructorIngredient = {
     _id: '643d69a5c3f7b9001cfa093c',
     name: 'Краторная булка N-200i',
@@ -34,24 +62,7 @@ describe('Тесты ConstructorSlice reducer', () => {
     ...initialState,
     constructorItems: {
       bun: bunIngredient,
-      ingredients: [
-        {
-          _id: '643d69a5c3f7b9001cfa0943',
-          name: 'Соус фирменный Space Sauce',
-          type: 'sauce',
-          proteins: 50,
-          fat: 22,
-          carbohydrates: 11,
-          calories: 14,
-          price: 80,
-          image: 'https://code.s3.yandex.net/react/code/sauce-04.png',
-          image_mobile:
-            'https://code.s3.yandex.net/react/code/sauce-04-mobile.png',
-          image_large:
-            'https://code.s3.yandex.net/react/code/sauce-04-large.png',
-          id: 'sauce-01'
-        }
-      ]
+      ingredients: [spaceSauceIngredient]
     }
   };
 
@@ -67,24 +78,7 @@ describe('Тесты ConstructorSlice reducer', () => {
   it('Должен удалить ингредиент при вызове deleteIngredient', () => {
     const initialStateWithIngredients = {
       bun: null,
-      ingredients: [
-        {
-          _id: '643d69a5c3f7b9001cfa0943',
-          name: 'Соус фирменный Space Sauce',
-          type: 'sauce',
-          proteins: 50,
-          fat: 22,
-          carbohydrates: 11,
-          calories: 14,
-          price: 80,
-          image: 'https://code.s3.yandex.net/react/code/sauce-04.png',
-          image_mobile:
-            'https://code.s3.yandex.net/react/code/sauce-04-mobile.png',
-          image_large:
-            'https://code.s3.yandex.net/react/code/sauce-04-large.png',
-          id: 'sauce-01'
-        }
-      ]
+      ingredients: [spaceSauceIngredient]
     };
 
     const state = constructorReducer(
@@ -97,103 +91,29 @@ describe('Тесты ConstructorSlice reducer', () => {
   it('Должен переместить ингредиент вверх при вызове moveUpIngredient', () => {
     const initialStateWithIngredients = {
       bun: null,
-      ingredients: [
-        {
-          _id: '643d69a5c3f7b9001cfa0943',
-          name: 'Соус фирменный Space Sauce',
-          type: 'sauce',
-          proteins: 50,
-          fat: 22,
-          carbohydrates: 11,
-          calories: 14,
-          price: 80,
-          image: 'https://code.s3.yandex.net/react/code/sauce-04.png',
-          image_mobile:
-            'https://code.s3.yandex.net/react/code/sauce-04-mobile.png',
-          image_large:
-            'https://code.s3.yandex.net/react/code/sauce-04-large.png',
-          id: 'sauce-01'
-        },
-        {
-          _id: '643d69a5c3f7b9001cfa0944',
-          name: 'Соус Spicy-X',
-          type: 'sauce',
-          proteins: 30,
-          fat: 20,
-          carbohydrates: 40,
-          calories: 30,
-          price: 90,
-          image: 'https://code.s3.yandex.net/react/code/sauce-02.png',
-          image_mobile:
-            'https://code.s3.yandex.net/react/code/sauce-02-mobile.png',
-          image_large:
-            'https://code.s3.yandex.net/react/code/sauce-02-large.png',
-          id: 'sauce-02'
-        }
-      ]
+      ingredients: [spaceSauceIngredient, spicyXSauceIngredient]
     };
 
     const state = constructorReducer(
       initialStateWithIngredients,
       moveUpIngredient(1)
     );
-    expect(state.ingredients[0]).toEqual(
-      initialStateWithIngredients.ingredients[1]
-    ); // первый элемент должен быть 'Соус Spicy-X'
-    expect(state.ingredients[1]).toEqual(
-      initialStateWithIngredients.ingredients[0]
-    ); // второй элемент должен быть 'Соус фирменный Space Sauce'
+    expect(state.ingredients[0]).toEqual(spicyXSauceIngredient); // первый элемент должен быть 'Соус Spicy-X'
+    expect(state.ingredients[1]).toEqual(spaceSauceIngredient); // второй элемент должен быть 'Соус фирменный Space Sauce'
   });
 
   it('Должен переместить ингредиент вниз при вызове moveDownIngredient', () => {
     const initialStateWithIngredients = {
       bun: null,
-      ingredients: [
-        {
-          _id: '643d69a5c3f7b9001cfa0943',
-          name: 'Соус фирменный Space Sauce',
-          type: 'sauce',
-          proteins: 50,
-          fat: 22,
-          carbohydrates: 11,
-          calories: 14,
-          price: 80,
-          image: 'https://code.s3.yandex.net/react/code/sauce-04.png',
-          image_mobile:
-            'https://code.s3.yandex.net/react/code/sauce-04-mobile.png',
-          image_large:
-            'https://code.s3.yandex.net/react/code/sauce-04-large.png',
-          id: 'sauce-01'
-        },
-        {
-          _id: '643d69a5c3f7b9001cfa0944',
-          name: 'Соус Spicy-X',
-          type: 'sauce',
-          proteins: 30,
-          fat: 20,
-          carbohydrates: 40,
-          calories: 30,
-          price: 90,
-          image: 'https://code.s3.yandex.net/react/code/sauce-02.png',
-          image_mobile:
-            'https://code.s3.yandex.net/react/code/sauce-02-mobile.png',
-          image_large:
-            'https://code.s3.yandex.net/react/code/sauce-02-large.png',
-          id: 'sauce-02'
-        }
-      ]
+      ingredients: [spaceSauceIngredient, spicyXSauceIngredient]
     };
 
     const state = constructorReducer(
       initialStateWithIngredients,
       moveDownIngredient(0)
     );
-    expect(state.ingredients[0]).toEqual(
-      initialStateWithIngredients.ingredients[1]
-    ); // первый элемент должен быть 'Соус Spicy-X'
-    expect(state.ingredients[1]).toEqual(
-      initialStateWithIngredients.ingredients[0]
-    ); // второй элемент должен быть 'Соус фирменный Space Sauce'
+    expect(state.ingredients[0]).toEqual(spicyXSauceIngredient); // первый элемент должен быть 'Соус Spicy-X'
+    expect(state.ingredients[1]).toEqual(spaceSauceIngredient); // второй элемент должен быть 'Соус фирменный Space Sauce'
   });
 
   it('Должен сбросить состояние при вызове resetConstructorState', () => {

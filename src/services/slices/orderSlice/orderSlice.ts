@@ -46,7 +46,7 @@ interface IOrderState {
 }
 
 // Начальное состояние
-const initialState: IOrderState = {
+export const initialState: IOrderState = {
   order: null,
   name: null,
   error: null,

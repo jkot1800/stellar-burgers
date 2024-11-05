@@ -81,7 +81,7 @@ interface IUserInitialState {
 }
 
 //Начальное состояние
-const initialState: IUserInitialState = {
+export const initialState: IUserInitialState = {
   user: null,
   isAuthChecked: false,
   error: null
