@@ -6,7 +6,7 @@ export interface InterfaceConsructorState {
   ingredients: TConstructorIngredient[];
 }
 
-const initialState: InterfaceConsructorState = {
+export const initialState: InterfaceConsructorState = {
   bun: null,
   ingredients: []
 };
@@ -69,3 +69,5 @@ export const {
 
 export const { stateConstructorSelector, ingredientsConstructorSelector } =
   constructorSlice.selectors;
+const constructorReducer = constructorSlice.reducer;
+export default constructorReducer;

@@ -46,7 +46,7 @@ interface IOrderState {
 }
 
 // Начальное состояние
-const initialState: IOrderState = {
+export const initialState: IOrderState = {
   order: null,
   name: null,
   error: null,
@@ -169,3 +169,6 @@ export const {
   totalSelector,
   totalTodaySelector
 } = orderSlice.selectors;
+
+const orderReducer = orderSlice.reducer;
+export default orderReducer;
